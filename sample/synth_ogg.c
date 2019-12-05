@@ -9,6 +9,8 @@
 #define STB_VORBIS_NO_CRT
 #define assert(x)
 int errno;
+#include <stdlib.h>
+#include <string.h>
 #include "stb_vorbis.c"
 
 #include "music.h"
@@ -17,12 +19,14 @@ static bool initialized = false;
 static int len = 0;
 
 static char tmpbuf[1 << 18];    // 256 KiB
-static short music[16 << 20];
+static short music[64 << 20];
 
 // NOTE: Define music_ogg as a byte array and music_ogg_len as its size here
 
 static inline void initialize()
 {
+	initialized = true;
+
 	int ch;
 
 	// int sr;
@@ -53,15 +57,13 @@ static inline void initialize()
 	for (int i = 0; i < len / 10; i += 2)
 		printf("%d\t%.4f\t%hd %hd\n", i, (float)i / 88200, music[i], music[i + 1]);
 #endif
-
-	initialized = true;
 }
 
 unsigned synth(int16_t *buf, unsigned chunk_size)
 {
 	if (!initialized) initialize();
 
-	static uint16_t phase = 0;
+	static uint32_t phase = 0;
 	for (unsigned i = 0; i < chunk_size; i += 2) {
 		buf[i] = music[phase];
 		buf[i + 1] = music[phase + 1];
