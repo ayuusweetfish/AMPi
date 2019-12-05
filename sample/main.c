@@ -2,7 +2,6 @@
 
 #include "coroutine.h"
 #include "common.h"
-#include "circle/synchronize.h"
 
 CVCHIQDevice		    m_VCHIQ;
 CVCHIQSoundBaseDevice   m_VCHIQSound;

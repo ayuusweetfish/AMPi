@@ -20,7 +20,7 @@ static bool initialized = false;
 static int len = 0;
 
 static char tmpbuf[1 << 18];    // 256 KiB
-static short music[64 << 20];
+static short music[64 << 20];   // 64 MiB, stores ~6 minutes of stereo audio
 
 static inline void initialize()
 {

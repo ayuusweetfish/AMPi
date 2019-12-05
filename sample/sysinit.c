@@ -1,4 +1,4 @@
-#include "circle/synchronize.h"
+#include <linux/synchronize.h>
 
 static void vfpinit (void)
 {
@@ -19,7 +19,8 @@ static void vfpinit (void)
 
 void sysinit (void)
 {
-	EnableFIQs ();		// go to IRQ_LEVEL, EnterCritical() will not work otherwise
+	// go to IRQ_LEVEL, EnterCritical() will not work otherwise
+	__asm volatile ("cpsie f");
 
 	vfpinit ();
 
