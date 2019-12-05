@@ -1,9 +1,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <math.h>
-#ifdef DEBUG
-#include <stdio.h>
-#endif
+
+#include "common.h"
 
 #define STB_VORBIS_NO_PUSHDATA_API
 #define STB_VORBIS_NO_CRT
@@ -26,11 +25,12 @@ static inline void initialize()
 {
 	initialized = true;
 
-	int ch;
+	// Turn on LED
+    DSB();
+    *GPFSEL4 |= (1 << 21);
+    *GPCLR1 = (1 << 15);
 
-	// int sr;
-	// short *music;
-	// len = stb_vorbis_decode_memory(music_ogg, music_ogg_len, &ch, &sr, &music);
+	int ch;
 
 	int err;
 	stb_vorbis_alloc alloc = {
@@ -51,11 +51,8 @@ static inline void initialize()
 	}
 	stb_vorbis_close(v);
 
-#ifdef DEBUG
-	printf("len = %d\n", len);
-	for (int i = 0; i < len / 10; i += 2)
-		printf("%d\t%.4f\t%hd %hd\n", i, (float)i / 88200, music[i], music[i + 1]);
-#endif
+    *GPSET1 = (1 << 15);
+	DMB();
 }
 
 unsigned synth(int16_t *buf, unsigned chunk_size)
@@ -71,11 +68,3 @@ unsigned synth(int16_t *buf, unsigned chunk_size)
 
 	return chunk_size;
 }
-
-#ifdef DEBUG
-int main()
-{
-	synth(0, 0);
-	return 0;
-}
-#endif
