@@ -61,9 +61,9 @@ int CVCHIQSoundBaseDevice_CallMessage (CVCHIQSoundBaseDevice *_this, VC_AUDIO_MS
 
 int CVCHIQSoundBaseDevice_WriteChunk (CVCHIQSoundBaseDevice *_this)
 {
-    if (_this->chunk_cb == 0) return 0;
+    if (_this->ChunkCallback == 0) return 0;
     s16 Buffer[_this->m_nChunkSize];
-    unsigned nWords = (*_this->chunk_cb) (Buffer, _this->m_nChunkSize);
+    unsigned nWords = (*_this->ChunkCallback) (Buffer, _this->m_nChunkSize);
     if (nWords == 0)
     {
         _this->m_State = VCHIQSoundIdle;
@@ -204,7 +204,7 @@ void CVCHIQSoundBaseDevice_Ctor (CVCHIQSoundBaseDevice *_this, CVCHIQDevice *pVC
     //assert (44100 <= nSampleRate && nSampleRate <= 48000);
     assert (Destination < VCHIQSoundDestinationUnknown);
 
-    _this->chunk_cb = 0;
+    _this->ChunkCallback = 0;
     _this->m_nSampleRate = nSampleRate;
     _this->m_nChunkSize = nChunkSize;
     _this->m_Destination = Destination;

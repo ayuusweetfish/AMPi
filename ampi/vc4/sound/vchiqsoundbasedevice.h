@@ -56,7 +56,7 @@ typedef unsigned (*chunk_cb_t) (int16_t *pBuffer, unsigned nChunkSize);
 
 typedef struct CVCHIQSoundBaseDevice_s
 {
-    chunk_cb_t chunk_cb;
+    chunk_cb_t ChunkCallback;
 
     unsigned m_nSampleRate;
     unsigned m_nChunkSize;

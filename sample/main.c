@@ -31,7 +31,7 @@ int main (void)
 	CVCHIQSoundBaseDevice_Ctor(&m_VCHIQSound, &m_VCHIQ, 44100, 4000, VCHIQSoundDestinationAuto);
 
 	// Set audio callback
-	m_VCHIQSound.chunk_cb = synth;
+	m_VCHIQSound.ChunkCallback = synth;
 
 	// Create the playback thread which waits until
 	// the synth() function stops producing output,
