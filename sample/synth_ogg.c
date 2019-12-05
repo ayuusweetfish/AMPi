@@ -13,15 +13,14 @@ int errno;
 #include <string.h>
 #include "stb_vorbis.c"
 
-#include "music.h"
+extern unsigned char music_ogg[];
+extern unsigned int music_ogg_len;
 
 static bool initialized = false;
 static int len = 0;
 
 static char tmpbuf[1 << 18];    // 256 KiB
 static short music[64 << 20];
-
-// NOTE: Define music_ogg as a byte array and music_ogg_len as its size here
 
 static inline void initialize()
 {

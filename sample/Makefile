@@ -23,14 +23,12 @@ EXTRALIBS += $(LIBGCC)
 LIBC	!= $(CC) $(ARCH) -print-file-name=libc.a
 EXTRALIBS += $(LIBC)
 DEFINE	+= -DOGG
-OBJS	+= synth_ogg.o
-MUSIC	= music.h
+OBJS	+= synth_ogg.o music.o
 else
 OBJS	+= synth.o
-MUSIC	= 
 endif
 
-$(TARGET).img: $(MUSIC) $(OBJS) $(LIBS) link.ld
+$(TARGET).img: $(OBJS) $(LIBS) link.ld
 	@echo "  LD    $(TARGET).elf"
 	@$(LD) -o $(TARGET).elf $(LDFLAGS) \
 		-T link.ld $(CRTBEGIN) $(OBJS) \
@@ -40,10 +38,11 @@ $(TARGET).img: $(MUSIC) $(OBJS) $(LIBS) link.ld
 	@echo -n "  WC    $(TARGET).img => "
 	@wc -c < $(TARGET).img
 
-music.h: music.ogg
-	@xxd -i music.ogg > music.h
-
 clean:
-	rm -f *.o $(TARGET).elf $(TARGET).img music.h
+	rm -f *.o $(TARGET).elf $(TARGET).img
 
 include $(AMPIHOME)/Rules.mk
+
+music.o: music.ogg
+	@echo "  OGG   music.ogg"
+	@xxd -i music.ogg | $(CC) $(CFLAGS) -std=gnu99 -c -o music.o -x c -
