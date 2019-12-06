@@ -1,3 +1,4 @@
+#include <ampi.h>
 #include <ampienv.h>
 
 #include <linux/synchronize.h>
@@ -91,6 +92,7 @@ void timer1_handler(void *_unused)
 	DMB(); DSB();
 
 	if (periodic) periodic();
+	AMPiPoke();
 }
 
 void InitializeMMU (void);

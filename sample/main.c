@@ -1,4 +1,5 @@
 #include <ampi.h>
+#include <ampienv.h>
 
 #include <linux/coroutine.h>
 #include "common.h"
@@ -17,7 +18,7 @@ int main (void)
 
 	while (1) {
 		AMPiStart();
-		while (AMPiIsActive()) AMPiPoke();
+		while (AMPiIsActive()) __asm__ __volatile__ ("");
 		MsDelay(2000);
 	}
 }
