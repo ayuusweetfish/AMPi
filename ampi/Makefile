@@ -1,6 +1,7 @@
 AMPIHOME = .
 
 OBJS = \
+	ampi.o \
 	linux/linuxemu.o \
 	linux/bug.o linux/completion.o linux/delay.o linux/device.o \
 	linux/dma-mapping.o linux/interrupt.o linux/kthread.o linux/mutex.o \

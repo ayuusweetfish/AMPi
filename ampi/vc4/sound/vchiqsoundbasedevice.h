@@ -92,7 +92,8 @@ boolean CVCHIQSoundBaseDevice_Start (CVCHIQSoundBaseDevice *_this);
 
 /// \brief Stops the transmission of sound data
 /// \note Cancel takes effect after a short delay
-void CVCHIQSoundBaseDevice_Cancel (CVCHIQSoundBaseDevice *_this);
+/// \return Operation successful?
+boolean CVCHIQSoundBaseDevice_Cancel (CVCHIQSoundBaseDevice *_this);
 
 /// \return Is the sound data transmission running?
 boolean CVCHIQSoundBaseDevice_IsActive (CVCHIQSoundBaseDevice *_this);

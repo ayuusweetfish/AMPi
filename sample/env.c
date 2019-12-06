@@ -112,8 +112,20 @@ void timer1_handler(void *_unused)
 	if (periodic) periodic();
 }
 
+void InitializeMMU (void);
+void _irq_stub ();
+
 void env_init()
 {
+	// MMU
+	InitializeMMU ();
+
+	// IRQs
+	uint32_t *irq = (uint32_t *)0x18;
+	*irq = 0xea000000 | ((uint32_t *)_irq_stub - irq - 2);
+	__asm__ __volatile__ ("cpsie i");
+
+	// Timer
 	*SYSTMR_C1 = *SYSTMR_CLO + T1_INTV;
 	ConnectInterrupt(1, timer1_handler, NULL);
 }

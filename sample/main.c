@@ -3,34 +3,17 @@
 #include "coroutine.h"
 #include "common.h"
 
-CVCHIQDevice		    m_VCHIQ;
-CVCHIQSoundBaseDevice   m_VCHIQSound;
-
-void InitializeMMU (void);
-void _irq_stub ();
-
 unsigned synth(int16_t *buf, unsigned chunk_size);
 void PlaybackThread (void *_unused);
 
 int main (void)
 {
-	// MMU
-	InitializeMMU ();
-
-	// IRQs
-	uint32_t *irq = (uint32_t *)0x18;
-	*irq = 0xea000000 | ((uint32_t *)_irq_stub - irq - 2);
-	__asm__ __volatile__ ("cpsie i");
-
 	// Start the timer in the environment
 	env_init();
 
-	// Initialize device
-	CVCHIQDevice_Initialize(&m_VCHIQ);
-	CVCHIQSoundBaseDevice_Ctor(&m_VCHIQSound, &m_VCHIQ, 44100, 4000, VCHIQSoundDestinationAuto);
-
-	// Set audio callback
-	m_VCHIQSound.ChunkCallback = synth;
+	// Initialize audio
+	AMPiInitialize(44100, 4000);
+	AMPiSetChunkCallback(synth);
 
 	// Create the playback thread which waits until
 	// the synth() function stops producing output,
@@ -46,8 +29,8 @@ int main (void)
 void PlaybackThread (void *_unused)
 {
 	while (1) {
-		CVCHIQSoundBaseDevice_Start(&m_VCHIQSound);
-		while (CVCHIQSoundBaseDevice_IsActive (&m_VCHIQSound)) co_yield();
+		AMPiStart();
+		while (AMPiIsActive()) co_yield();
 		MsDelay (2000);
 	}
 }

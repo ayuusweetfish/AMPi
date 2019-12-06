@@ -390,11 +390,11 @@ boolean CVCHIQSoundBaseDevice_Start (CVCHIQSoundBaseDevice *_this)
     return TRUE;
 }
 
-void CVCHIQSoundBaseDevice_Cancel (CVCHIQSoundBaseDevice *_this)
+boolean CVCHIQSoundBaseDevice_Cancel (CVCHIQSoundBaseDevice *_this)
 {
     if (_this->m_State != VCHIQSoundRunning)
     {
-        return;
+        return FALSE;
     }
 
     _this->m_State = VCHIQSoundCancelled;
@@ -417,11 +417,15 @@ void CVCHIQSoundBaseDevice_Cancel (CVCHIQSoundBaseDevice *_this)
     {
         LOG (FromVCHIQSound, LogError,
                     "Cannot stop audio (%d)", nResult);
+
+        return FALSE;
     }
 
     vchi_service_release (_this->m_hService);
 
     _this->m_State = VCHIQSoundIdle;
+
+    return TRUE;
 }
 
 boolean CVCHIQSoundBaseDevice_IsActive (CVCHIQSoundBaseDevice *_this)
