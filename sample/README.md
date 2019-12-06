@@ -19,7 +19,7 @@ them is left to the reader as an exercise.)
 ### Ogg mode!
 
 Find a **stereo** Ogg file with a length not exceeding 380
-seconds and not too large in size -- 16 MiB is completely safe.
+seconds and not too large in size — 16 MiB is completely safe.
 Copy it to this directory and build with a flag:
 
 ```sh
