@@ -16,9 +16,10 @@ int main (void)
 	AMPiInitialize(44100, 4000);
 	AMPiSetChunkCallback(synth);
 
+	// Start playback
 	while (1) {
 		AMPiStart();
-		while (AMPiIsActive()) __asm__ __volatile__ ("");
+		while (AMPiIsActive()) { }
 		MsDelay(2000);
 	}
 }

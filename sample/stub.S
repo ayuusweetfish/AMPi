@@ -1,16 +1,12 @@
 .section .init
 .global _start
 _start:
-    cps     #0x11                /* set fiq mode */
-    ldr     sp, =0x100000
-    cps     #0x12                /* set irq mode */
-    ldr     sp, =0x108000
-    cps     #0x17                /* set abort mode */
-    ldr     sp, =0x110000
-    cps     #0x1B                /* set "undefined" mode */
-    ldr     sp, =0x118000
-    cps     #0x1F                /* set system mode */
-    ldr     sp, =0x120000
+    # Stack pointer for IRQ mode
+    cps     #0x12
+    ldr     sp, =0x1008000
+    # Stack pointer for System mode
+    cps     #0x1F
+    ldr     sp, =0x1010000
     b	    sysinit
 
 .global _irq_stub

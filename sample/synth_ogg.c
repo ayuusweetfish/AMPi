@@ -26,9 +26,9 @@ static inline void initialize()
 	initialized = true;
 
 	// Turn on LED
-    DSB();
-    *GPFSEL4 |= (1 << 21);
-    *GPCLR1 = (1 << 15);
+	DSB();
+	*GPFSEL4 |= (1 << 21);
+	*GPCLR1 = (1 << 15);
 
 	int ch;
 
@@ -51,7 +51,7 @@ static inline void initialize()
 	}
 	stb_vorbis_close(v);
 
-    *GPSET1 = (1 << 15);
+	*GPSET1 = (1 << 15);
 	DMB();
 }
 
