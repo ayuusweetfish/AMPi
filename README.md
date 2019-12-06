@@ -11,14 +11,14 @@ functions defined in _ampienv.h_. These include memory
 allocation, timer, interrupt handler, mailbox, and logging.
 See comments there for details.
 
-To build the sample, run
+AMPi's functionalities are exposed through 6 functions:
 
-```sh
-cd sample
-make -j4        # To play a sine wave note, or
-cp path/to/music.ogg music.ogg
-OGG=1 make -j4  # To play an Ogg audio file
-```
+- `AMPiInitialize(sample_rate, chunk_size)`: Initialization
+- `AMPiSetChunkCallback(callback)`: Set audio data callback
+- `AMPiStart()`, `AMPiStop()`, `AMPiIsActive()`: As the names suggest
+- `AMPiPoke()`: Call this periodically to keep audio running
+
+See _sample/README.md_ for a demonstration.
 
 ## Usage
 
@@ -33,7 +33,7 @@ RASPPI=<1|2|3|4> AARCH=<32|64> make -j4
 If omitted, parameters default to `RASPPI=1` and `AARCH=32`
 respectively.
 
-Then add the _ampi_ directory to the include path and pass
+Then add the _ampi/_ directory to the include path and pass
 the produced file _libampi.a_ to the linker. Include _ampi.h_
 to access functionalities provided by the library.
 
