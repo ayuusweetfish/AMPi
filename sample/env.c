@@ -116,7 +116,7 @@ void env_init()
 uint32_t EnableVCHIQ (uint32_t buf)
 {
 	typedef mbox_buf(4) proptag;
-	proptag *mboxbuf = (proptag *) 0x1c80000;
+	proptag *mboxbuf = (proptag *) 0x4c80000;
 	mbox_init(*mboxbuf);
 	mboxbuf->tag.id = 0x48010;
 	mboxbuf->tag.u32[0] = buf;
@@ -138,7 +138,7 @@ void LogWrite (const char *pSource,
 
 void *GetCoherentRegion512K ()
 {
-	return (void *) 0x1c00000;
+	return (void *) 0x4c00000;
 }
 
 static char pool[1048576 * 32];

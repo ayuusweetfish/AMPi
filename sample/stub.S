@@ -3,10 +3,10 @@
 _start:
     # Stack pointer for IRQ mode
     cps     #0x12
-    ldr     sp, =0x1008000
+    ldr     sp, =0x4008000
     # Stack pointer for System mode
     cps     #0x1F
-    ldr     sp, =0x1010000
+    ldr     sp, =0x4010000
     b	    sysinit
 
 .global _irq_stub

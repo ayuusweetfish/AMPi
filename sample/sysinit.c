@@ -59,7 +59,7 @@ void InitializeMMU (void)
 			// Normal
 			nAttributes = 0x0040E;
 		}
-		else if (nBaseAddress == 0x1c00000)
+		else if (nBaseAddress == 0x4c00000)
 		{
 			// Strongly ordered
 			nAttributes = 0x10412;

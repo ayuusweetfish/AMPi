@@ -19,8 +19,7 @@ them is left to the reader as an exercise.)
 ### Ogg mode!
 
 Find a **stereo** Ogg file with a length not exceeding 380
-seconds and not too large, so that the produced image is less
-than 16 MiB minus 8000 bytes -- the Ogg being 15 MiB is safe.
+seconds and not too large in size -- 16 MiB is completely safe.
 Copy it to this directory and build with a flag:
 
 ```sh
@@ -28,10 +27,8 @@ cp path/to/music.ogg music.ogg
 OGG=1 make -j4
 ```
 
-On startup, it may take up to a few seconds for the entire
-image to be loaded. Then the Act LED is turned on while the
-data is being decoded, and when the LED goes off the audio
-will start to play.
+On startup, the Act LED is turned on while the data is being
+decoded, and when the LED goes off the audio will start to play.
 
 ## Credits
 

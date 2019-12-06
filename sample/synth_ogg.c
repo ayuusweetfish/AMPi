@@ -19,7 +19,7 @@ static bool initialized = false;
 static int len = 0;
 
 static char tmpbuf[1 << 18];    // 256 KiB
-static short music[64 << 20];   // 64 MiB, stores ~6 minutes of stereo audio
+static short *music = 0x6000000;
 
 static inline void initialize()
 {
@@ -30,17 +30,16 @@ static inline void initialize()
 	*GPFSEL4 |= (1 << 21);
 	*GPCLR1 = (1 << 15);
 
-	int ch;
-
 	int err;
 	stb_vorbis_alloc alloc = {
 		.alloc_buffer = tmpbuf,
 		.alloc_buffer_length_in_bytes = sizeof tmpbuf,
 	};
 	stb_vorbis *v = stb_vorbis_open_memory(music_ogg, music_ogg_len, &err, &alloc);
-	ch = v->channels;
+	int ch = v->channels;
 
-	int total = sizeof music / sizeof music[0];
+	// 64 MiB, stores ~6 minutes of stereo audio
+	int total = 32 << 20;
 	int offset = 0;
 	len = 0;
 	while (1) {

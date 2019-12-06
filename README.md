@@ -6,12 +6,10 @@ awesome [Circle](https://github.com/rsta2/circle) library.
 
 ## Interface
 
-:construction: For specific usage, see _sample/_ for now.
-
 AMPi requires support from the bare metal environment through
 functions defined in _ampienv.h_. These include memory
-allocation, co-operative scheduler, timer, interrupt handler,
-and logging. See comments there for details.
+allocation, timer, interrupt handler, mailbox, and logging.
+See comments there for details.
 
 To build the sample, run
 
