@@ -1,28 +1,9 @@
 #include <ampienv.h>
 
 #include <linux/synchronize.h>
-#include "coroutine.h"
 #include "common.h"
 
 #include <stdarg.h>
-
-int SchedulerCreateThread (int (*fn) (void *), void *param)
-{
-	// Such function pointer casts are safe for most platforms including ARM
-	return co_create((void (*)(void *))(fn), param);
-}
-
-void (*switch_handler) (int) = 0;
-
-void SchedulerRegisterSwitchHandler (void (*fn) (int))
-{
-	co_callback((void (*)(int8_t))fn);
-}
-
-void SchedulerYield ()
-{
-	co_yield();
-}
 
 void usDelay (unsigned nMicroSeconds)
 {

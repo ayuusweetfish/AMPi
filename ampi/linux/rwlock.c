@@ -1,6 +1,6 @@
 #include <linux/rwlock.h>
 #include <linux/bug.h>
-#include <ampienv.h>
+#include <linux/coroutine.h>
 
 #define WRITE_LOCK	(1U << 31)
 
@@ -14,7 +14,7 @@ void read_lock_bh (rwlock_t *lock)
 
 	while (lock->lock >= WRITE_LOCK)
 	{
-		SchedulerYield();
+		co_yield();
 	}
 }
 
@@ -37,7 +37,7 @@ void write_lock_bh (rwlock_t *lock)
 
 	while ((lock->lock & ~WRITE_LOCK) != 0)
 	{
-		SchedulerYield();
+		co_yield();
 	}
 }
 

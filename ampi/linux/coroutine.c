@@ -3,7 +3,6 @@
 
 void (*callback)(int8_t) = 0;
 
-#define MAX_CO      16
 #define MAX_STACK   65536
 
 static uint32_t used = 0;
@@ -70,12 +69,14 @@ void co_yield()
         current = 0;
         if (callback) callback(current);
         co_jump(&regs[id], &main_regs);
+    } else {
+        for (int i = 1; i <= MAX_CO; i++) co_next(i);
     }
 }
 
 void co_next(int8_t id)
 {
-	id--;
+    id--;
     if (!(used & (1 << id))) return;
     current = id + 1;
     if (callback) callback(current);

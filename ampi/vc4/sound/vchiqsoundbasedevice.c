@@ -23,7 +23,7 @@
 //
 #include <vc4/sound/vchiqsoundbasedevice.h>
 #include <linux/assert.h>
-#include <ampienv.h>
+#include <linux/coroutine.h>
 
 #define LOG(...)
 
@@ -49,7 +49,7 @@ int CVCHIQSoundBaseDevice_CallMessage (CVCHIQSoundBaseDevice *_this, VC_AUDIO_MS
     int nResult = CVCHIQSoundBaseDevice_QueueMessage (_this, pMessage);
     if (nResult == 0)
     {
-        while (!_this->m_Event) SchedulerYield ();
+        while (!_this->m_Event) co_yield ();
     }
     else
     {
@@ -400,7 +400,7 @@ boolean CVCHIQSoundBaseDevice_Cancel (CVCHIQSoundBaseDevice *_this)
     _this->m_State = VCHIQSoundCancelled;
     while (_this->m_State == VCHIQSoundCancelled)
     {
-        SchedulerYield ();
+        co_yield ();
     }
 
     assert (_this->m_State == VCHIQSoundTerminating);

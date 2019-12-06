@@ -1,6 +1,6 @@
 #include <linux/mutex.h>
 #include <linux/bug.h>
-#include <ampienv.h>
+#include <linux/coroutine.h>
 
 void mutex_lock (struct mutex *lock)
 {
@@ -10,7 +10,7 @@ void mutex_lock (struct mutex *lock)
 
 	while (lock->lock != 0)
 	{
-		SchedulerYield();
+		co_yield();
 	}
 
 	lock->lock = 1;

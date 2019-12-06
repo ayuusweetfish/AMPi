@@ -3,6 +3,7 @@
 
 #include <vc4/vchiq/vchiqdevice.h>
 #include <vc4/sound/vchiqsoundbasedevice.h>
+#include <linux/coroutine.h>
 
 static CVCHIQDevice m_VCHIQ;
 static CVCHIQSoundBaseDevice m_VCHIQSound;
@@ -38,5 +39,5 @@ bool AMPiIsActive()
 
 void AMPiPoke()
 {
-    // TODO
+    for (int i = 1; i <= MAX_CO; i++) co_next(i);
 }

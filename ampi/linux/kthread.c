@@ -1,17 +1,17 @@
 #include <linux/kthread.h>
 #include <linux/bug.h>
-#include <ampienv.h>
+#include <linux/coroutine.h>
 
 struct task_struct *current = 0;
 
-#define MAX_THREADS     16
-static struct task_struct tasks[MAX_THREADS];
+static struct task_struct tasks[MAX_CO];
 
 struct task_struct *kthread_create (int (*threadfn)(void *data),
 				    void *data,
 				    const char namefmt[], ...)
 {
-	int pid = SchedulerCreateThread (threadfn, data);
+	// Such function pointer casts are safe for most platforms including ARM
+	int pid = co_create ((void (*)(void *))threadfn, data);
 
 	struct task_struct *task = &tasks[pid];
 	task->pid = pid;
@@ -33,15 +33,15 @@ void flush_signals (struct task_struct *task)
 {
 }
 
-static void task_switch_handler (int pid)
+static void task_switch_handler (int8_t pid)
 {
-	BUG_ON (pid < 0 || pid >= MAX_THREADS);
+	BUG_ON (pid < 0 || pid >= MAX_CO);
 	current = &tasks[pid];
 }
 
 int linuxemu_init_kthread (void)
 {
-	SchedulerRegisterSwitchHandler (task_switch_handler);
+	co_callback (task_switch_handler);
 
 	tasks[0].pid = 0;
 	current = &tasks[0];

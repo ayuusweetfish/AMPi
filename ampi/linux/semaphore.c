@@ -1,6 +1,6 @@
 #include <linux/semaphore.h>
 #include <linux/bug.h>
-#include <ampienv.h>
+#include <linux/coroutine.h>
 
 void down (struct semaphore *sem)
 {
@@ -10,7 +10,7 @@ void down (struct semaphore *sem)
 
 	while (sem->count == 0)
 	{
-		SchedulerYield();
+		co_yield();
 	}
 
 	sem->count--;

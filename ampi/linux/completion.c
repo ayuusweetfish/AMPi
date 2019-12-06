@@ -1,7 +1,7 @@
 #include <linux/completion.h>
 #include <linux/jiffies.h>
 #include <linux/bug.h>
-#include <ampienv.h>
+#include <linux/coroutine.h>
 
 void complete (struct completion *x)
 {
@@ -29,7 +29,7 @@ void wait_for_completion (struct completion *x)
 
 	while (x->done == 0)
 	{
-		SchedulerYield();
+		co_yield();
 	}
 
 	x->done--;
@@ -67,7 +67,7 @@ long wait_for_completion_interruptible_timeout (struct completion *x, unsigned l
 			return 0;
 		}
 
-		SchedulerYield();
+		co_yield();
 	}
 
 	x->done--;

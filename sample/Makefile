@@ -4,7 +4,7 @@
 
 AMPIHOME = ../ampi
 
-OBJS	= main.o env.o coroutine.o stub.o sysinit.o util.o
+OBJS	= main.o env.o stub.o sysinit.o util.o
 
 LIBS	= $(AMPIHOME)/libampi.a
 

@@ -3,7 +3,8 @@ AMPIHOME = .
 OBJS = \
 	ampi.o \
 	linux/linuxemu.o \
-	linux/bug.o linux/completion.o linux/delay.o linux/device.o \
+	linux/bug.o linux/completion.o linux/coroutine.o \
+	linux/delay.o linux/device.o \
 	linux/dma-mapping.o linux/interrupt.o linux/kthread.o linux/mutex.o \
 	linux/platform_device.o linux/printk.o linux/raspberrypi-firmware.o \
 	linux/rwlock.o linux/semaphore.o linux/spinlock.o linux/sprintf.o \

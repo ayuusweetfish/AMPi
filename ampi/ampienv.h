@@ -26,17 +26,6 @@ void ampi_free (void *ptr);
 // -- Assertion --
 void ampi_assertion_failed (const char *pExpr, const char *pFile, unsigned nLine);
 
-// -- Co-operative scheduler --
-// Creates a thread and returns its ID. The thread should start
-// its execution soon.
-int SchedulerCreateThread (int (*fn) (void *), void *param);
-// Called once, the function pointer passed here should be called
-// whenever a context switch takes place, with the argument being
-// the ID of the thread being switched to.
-void SchedulerRegisterSwitchHandler (void (*fn) (int));
-// Gives up control and switch to another thread.
-void SchedulerYield ();
-
 // -- Timer --
 // Delays
 void MsDelay (unsigned nMilliSeconds);
