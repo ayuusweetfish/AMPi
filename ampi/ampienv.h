@@ -8,7 +8,7 @@ extern "C" {
 // == Configuration ==
 
 // If RASPPI == 1 and GPU_L2_CACHE_ENABLED; otherwise use 0xc0000000
-// See circle/bcm2835.h
+// Reference: circle/bcm2835.h
 #define GPU_MEM_BASE 0x40000000
 
 // Replace with #define to turn on multi-core support
@@ -31,7 +31,7 @@ void ampi_assertion_failed (const char *pExpr, const char *pFile, unsigned nLine
 void MsDelay (unsigned nMilliSeconds);
 void usDelay (unsigned nMicroSeconds);
 
-// Called once, the handler passed here should be called with a
+// Called once. The handler passed here should be called with a
 // fixed frequency. 100 Hz is a reasonable value.
 typedef void TPeriodicTimerHandler (void);
 void RegisterPeriodicHandler (TPeriodicTimerHandler *pHandler);
@@ -43,9 +43,9 @@ typedef void TInterruptHandler (void *pParam);
 void ConnectInterrupt (unsigned nIRQ, TInterruptHandler *pHandler, void *pParam);
 
 // -- Mailbox --
-// Use property tag 0x48010 with a size of 32 bits, pass `buf` as
+// Use property tag 0x48010 with a size of 32 bits, pass `p` as
 // the argument and return the response value as a 32-bit integer.
-uint32_t EnableVCHIQ (uint32_t buf);
+uint32_t EnableVCHIQ (uint32_t p);
 
 // -- Logging --
 #define LOG_ERROR   1

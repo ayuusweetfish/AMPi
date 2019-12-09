@@ -7,9 +7,9 @@ awesome [Circle](https://github.com/rsta2/circle) library.
 ## Interface
 
 AMPi requires support from the bare metal environment through
-functions defined in _ampienv.h_. These include memory
-allocation, timer, interrupt handler, mailbox, and logging.
-See comments there for details.
+functions defined in [_ampi/ampienv.h_](ampi/ampienv.h). These
+include memory allocation, timer, interrupt handler, mailbox,
+and logging. See comments there for details.
 
 AMPi's functionalities are exposed through 6 functions:
 
