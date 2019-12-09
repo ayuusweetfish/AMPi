@@ -18,7 +18,7 @@ AMPi's functionalities are exposed through 6 functions:
 - **AMPiStart()**, **AMPiStop()**, **AMPiIsActive()** — As the names suggest
 - **AMPiPoke()** — Call this periodically to keep audio running
 
-See _sample/README.md_ for a demonstration.
+See [_sample/_](_sample/_) for a demonstration.
 
 ## Usage
 
@@ -36,6 +36,12 @@ respectively.
 Add the _ampi/_ directory to the include path and pass
 the produced file _libampi.a_ to the linker. Include _ampi.h_
 to access functionalities provided by the library.
+
+## Caveats
+
+Although the library is expected to work on all models of Pi,
+models other than the Zero have not been tested. If interested,
+please help by sending your success or failure report!
 
 ## Licence and Credits
 
