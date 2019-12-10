@@ -20,6 +20,11 @@ extern "C" {
 #include <stdint.h>
 
 // -- Memory allocation --
+// On ARMv6/v7-A the returned memory should be configured to have
+// Normal attribute, since ldrex/strex will be executed upon them.
+// For reference, a total of 1392 bytes will be allocated for a
+// single initialization on a Pi Zero. Starting and stopping do
+// not incur memory allocations.
 void *ampi_malloc (size_t size);
 void ampi_free (void *ptr);
 
@@ -58,7 +63,6 @@ void LogWrite (const char *pSource,         // short name of module
 
 // -- Miscellaneous --
 // Returns a pointer to a 512KiB region configured to be Strongly Ordered.
-// For ARMv6, see the Architectural Reference Manual, p. B4-12.
 void *GetCoherentRegion512K ();
 
 #ifdef __cplusplus

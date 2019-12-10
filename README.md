@@ -37,6 +37,19 @@ Add the _ampi/_ directory to the include path and pass
 the produced file _libampi.a_ to the linker. Include _ampi.h_
 to access functionalities provided by the library.
 
+### Troubleshooting
+
+**"failed to set channelbase"**: Make sure data is correctly
+transferred through the mailbox in **EnableVCHIQ()**.
+
+**Data abort at an ldrex/strex instruction**: Make sure that
+function **ampi_malloc()** returns Normal memory. See the ARM
+Architectural Reference Manual for details. For ARMv6, relevant
+information resides on page B4-12.
+
+**Initialization succeeded, but no audio output**: Check that
+**AMPiPoke()** is indeed being called periodically.
+
 ## Caveats
 
 Although the library is expected to work on all models of Pi,
