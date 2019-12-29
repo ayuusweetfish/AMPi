@@ -14,13 +14,13 @@ PREFIX	?= arm-none-eabi-
 CC	= $(PREFIX)gcc
 FLOAT_ABI ?= hard
 ARCH	?= -DAARCH=32 -mcpu=arm1176jzf-s -marm -mfpu=vfp -mfloat-abi=$(FLOAT_ABI)
-LIBM	!= $(CC) $(ARCH) -print-file-name=libm.a
+LIBM	= $(shell $(CC) $(ARCH) -print-file-name=libm.a)
 EXTRALIBS += $(LIBM)
 
 ifeq ($(strip $(OGG)),1)
-LIBGCC	!= $(CC) $(ARCH) -print-file-name=libgcc.a
+LIBGCC	= $(shell $(CC) $(ARCH) -print-file-name=libgcc.a)
 EXTRALIBS += $(LIBGCC)
-LIBC	!= $(CC) $(ARCH) -print-file-name=libc.a
+LIBC	= $(shell $(CC) $(ARCH) -print-file-name=libc.a)
 EXTRALIBS += $(LIBC)
 DEFINE	+= -DOGG
 OBJS	+= synth_ogg.o music.o

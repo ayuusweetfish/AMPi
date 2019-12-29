@@ -38,11 +38,6 @@ else
 $(error AARCH must be set to 32 or 64)
 endif
 
-MAKE_VERSION_MAJOR := $(firstword $(subst ., ,$(MAKE_VERSION)))
-ifneq ($(filter 0 1 2 3,$(MAKE_VERSION_MAJOR)),)
-$(error Requires GNU make 4.0 or newer)
-endif
-
 OPTIMIZE ?= -O2
 
 INCLUDE	+= -I $(AMPIHOME)
