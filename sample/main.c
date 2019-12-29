@@ -13,13 +13,20 @@ int main (void)
 	env_init();
 
 	// Initialize audio
+	DSB();
 	AMPiInitialize(44100, 4000);
 	AMPiSetChunkCallback(synth);
+	DMB();
 
 	// Start playback
 	while (1) {
+		DSB();
 		AMPiStart();
 		while (AMPiIsActive()) { }
+		DMB();
+
+		DSB();
 		MsDelay(2000);
+		DMB();
 	}
 }

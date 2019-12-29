@@ -48,7 +48,9 @@ Architectural Reference Manual for details. For ARMv6, relevant
 information resides on page B4-12.
 
 **Initialization succeeded, but no audio output**: Check that
-**AMPiPoke()** is indeed being called periodically.
+**AMPiPoke()** is indeed being called periodically. Also, make
+sure that calls to AMPi functions are surrounded with memory
+barrier instructions like is done for any other peripheral.
 
 ## Caveats
 
