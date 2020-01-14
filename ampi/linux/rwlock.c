@@ -14,7 +14,7 @@ void read_lock_bh (rwlock_t *lock)
 
 	while (lock->lock >= WRITE_LOCK)
 	{
-		co_yield();
+		ampi_co_yield();
 	}
 }
 
@@ -37,7 +37,7 @@ void write_lock_bh (rwlock_t *lock)
 
 	while ((lock->lock & ~WRITE_LOCK) != 0)
 	{
-		co_yield();
+		ampi_co_yield();
 	}
 }
 

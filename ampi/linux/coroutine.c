@@ -28,10 +28,10 @@ struct reg_set {
 static struct reg_set main_regs;
 static struct reg_set regs[MAX_CO] = {{ 0 }};
 
-void co_jump(struct reg_set *restore_regs, struct reg_set *branch_regs);
+void ampi_co_jump(struct reg_set *restore_regs, struct reg_set *branch_regs);
 
 __attribute__ ((noinline, naked))
-void co_jump_arg(struct reg_set *restore_regs, struct reg_set *branch_regs, void *arg)
+void ampi_co_jump_arg(struct reg_set *restore_regs, struct reg_set *branch_regs, void *arg)
 {
     __asm__ __volatile__ (
         "stmia r0!, {r4-r11, sp, lr}\n"
@@ -41,7 +41,7 @@ void co_jump_arg(struct reg_set *restore_regs, struct reg_set *branch_regs, void
 }
 
 __attribute__ ((noinline, naked))
-void co_jump(struct reg_set *restore_regs, struct reg_set *branch_regs)
+void ampi_co_jump(struct reg_set *restore_regs, struct reg_set *branch_regs)
 {
     __asm__ __volatile__ (
         "stmia r0!, {r4-r11, sp, lr}\n"
@@ -49,7 +49,7 @@ void co_jump(struct reg_set *restore_regs, struct reg_set *branch_regs)
     );
 }
 
-int8_t co_create(void (*fn)(void *), void *arg)
+int8_t ampi_co_create(void (*fn)(void *), void *arg)
 {
     printk("Creating: %x %x", fn, arg);
     for (int i = 0; i < MAX_CO; i++)
@@ -62,19 +62,19 @@ int8_t co_create(void (*fn)(void *), void *arg)
     return 0;
 }
 
-void co_yield()
+void ampi_co_yield()
 {
     if (current > 0) {
         int8_t id = current - 1;
         current = 0;
         if (callback) callback(current);
-        co_jump(&regs[id], &main_regs);
+        ampi_co_jump(&regs[id], &main_regs);
     } else {
-        for (int i = 1; i <= MAX_CO; i++) co_next(i);
+        for (int i = 1; i <= MAX_CO; i++) ampi_co_next(i);
     }
 }
 
-void co_next(int8_t id)
+void ampi_co_next(int8_t id)
 {
     id--;
     if (!(used & (1 << id))) return;
@@ -84,13 +84,13 @@ void co_next(int8_t id)
         // Initialization
         regs[id].pc = (uint32_t)fn_ptr[id];
         regs[id].sp = (uint32_t)&stack_space[id + 1];
-        co_jump_arg(&main_regs, &regs[id], args[id]);
+        ampi_co_jump_arg(&main_regs, &regs[id], args[id]);
     } else {
-        co_jump(&main_regs, &regs[id]);
+        ampi_co_jump(&main_regs, &regs[id]);
     }
 }
 
-void co_callback(void (*cb)(int8_t))
+void ampi_co_callback(void (*cb)(int8_t))
 {
     callback = cb;
 }

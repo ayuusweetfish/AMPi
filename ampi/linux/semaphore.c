@@ -10,7 +10,7 @@ void down (struct semaphore *sem)
 
 	while (sem->count == 0)
 	{
-		co_yield();
+		ampi_co_yield();
 	}
 
 	sem->count--;

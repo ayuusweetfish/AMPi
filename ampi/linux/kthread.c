@@ -11,7 +11,7 @@ struct task_struct *kthread_create (int (*threadfn)(void *data),
 				    const char namefmt[], ...)
 {
 	// Such function pointer casts are safe for most platforms including ARM
-	int pid = co_create ((void (*)(void *))threadfn, data);
+	int pid = ampi_co_create ((void (*)(void *))threadfn, data);
 
 	struct task_struct *task = &tasks[pid];
 	task->pid = pid;
@@ -41,7 +41,7 @@ static void task_switch_handler (int8_t pid)
 
 int linuxemu_init_kthread (void)
 {
-	co_callback (task_switch_handler);
+	ampi_co_callback (task_switch_handler);
 
 	tasks[0].pid = 0;
 	current = &tasks[0];

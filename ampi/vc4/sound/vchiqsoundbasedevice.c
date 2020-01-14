@@ -49,7 +49,7 @@ int CVCHIQSoundBaseDevice_CallMessage (CVCHIQSoundBaseDevice *_this, VC_AUDIO_MS
     int nResult = CVCHIQSoundBaseDevice_QueueMessage (_this, pMessage);
     if (nResult == 0)
     {
-        while (!_this->m_Event) co_yield ();
+        while (!_this->m_Event) ampi_co_yield ();
     }
     else
     {
@@ -400,7 +400,7 @@ boolean CVCHIQSoundBaseDevice_Cancel (CVCHIQSoundBaseDevice *_this)
     _this->m_State = VCHIQSoundCancelled;
     while (_this->m_State == VCHIQSoundCancelled)
     {
-        co_yield ();
+        ampi_co_yield ();
     }
 
     assert (_this->m_State == VCHIQSoundTerminating);

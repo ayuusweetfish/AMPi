@@ -29,7 +29,7 @@ void wait_for_completion (struct completion *x)
 
 	while (x->done == 0)
 	{
-		co_yield();
+		ampi_co_yield();
 	}
 
 	x->done--;
@@ -67,7 +67,7 @@ long wait_for_completion_interruptible_timeout (struct completion *x, unsigned l
 			return 0;
 		}
 
-		co_yield();
+		ampi_co_yield();
 	}
 
 	x->done--;

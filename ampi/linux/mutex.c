@@ -10,7 +10,7 @@ void mutex_lock (struct mutex *lock)
 
 	while (lock->lock != 0)
 	{
-		co_yield();
+		ampi_co_yield();
 	}
 
 	lock->lock = 1;

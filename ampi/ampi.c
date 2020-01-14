@@ -39,5 +39,5 @@ bool AMPiIsActive()
 
 void AMPiPoke()
 {
-    for (int i = 1; i <= MAX_CO; i++) co_next(i);
+    for (int i = 1; i <= MAX_CO; i++) ampi_co_next(i);
 }
