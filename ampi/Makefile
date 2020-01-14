@@ -15,12 +15,18 @@ OBJS = \
 	vc4/vchiq/vchiq_kern_lib.o vc4/vchiq/vchiq_connected.o \
 	vc4/vchiq/vchiq_shim.o vc4/vchiq/vchiq_util.o
 
-libampi.a: $(OBJS)
+libampi.a: libampi.o
 	@echo "  AR    $@"
 	@rm -f $@
-	@$(AR) cr $@ $(OBJS)
+	@$(AR) cr $@ $<
+
+libampi.o: $(OBJS)
+	@echo "  LD    $@"
+	@rm -f $@
+	@$(LD) -r -o $@ $(OBJS)
+	@$(OBJCOPY) --localize-hidden $@
 
 clean:
-	rm -f $(OBJS) libampi.a
+	rm -f $(OBJS) libampi.a libampi.o
 
 include Rules.mk

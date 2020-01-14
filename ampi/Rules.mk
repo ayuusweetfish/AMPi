@@ -10,6 +10,7 @@ CC	= $(PREFIX)gcc
 AS	= $(CC)
 LD	= $(PREFIX)ld
 AR	= $(PREFIX)ar
+OBJCOPY	= $(PREFIX)objcopy
 
 ifeq ($(strip $(AARCH)),32)
 ifeq ($(strip $(RASPPI)),1)
@@ -44,7 +45,7 @@ INCLUDE	+= -I $(AMPIHOME)
 DEFINE	+= -D__circle__ -DRASPPI=$(RASPPI)
 
 AFLAGS	+= $(ARCH) $(DEFINE) $(INCLUDE) $(OPTIMIZE)
-CFLAGS	+= $(ARCH) -Wall -fsigned-char -ffreestanding $(DEFINE) $(INCLUDE) $(OPTIMIZE) -g
+CFLAGS	+= $(ARCH) -Wall -fsigned-char -ffreestanding -fvisibility=hidden $(DEFINE) $(INCLUDE) $(OPTIMIZE) -g
 LDFLAGS	+= --section-start=.init=$(LOADADDR)
 
 %.o: %.S
