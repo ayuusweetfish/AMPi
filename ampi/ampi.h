@@ -17,7 +17,7 @@ bool AMPiInitialize(unsigned nSampleRate, unsigned nChunkSize);
 // It should return the number of elements written. If the value
 // returned is less than `nChunkSize`, playback will automatically
 // be stopped.
-typedef unsigned (*chunk_cb_t) (int16_t *pBuffer, unsigned nChunkSize);
+typedef unsigned (*chunk_cb_t) (int16_t **pBuffer, unsigned nChunkSize);
 void AMPiSetChunkCallback(chunk_cb_t Callback);
 
 // As the names suggest

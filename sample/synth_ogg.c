@@ -54,9 +54,12 @@ static inline void initialize()
 	DMB();
 }
 
-unsigned synth(int16_t *buf, unsigned chunk_size)
+unsigned synth(int16_t **o_buf, unsigned chunk_size)
 {
 	if (!initialized) initialize();
+
+	static int16_t buf[8192];
+	*o_buf = &buf[0];
 
 	static uint32_t phase = 0;
 	for (unsigned i = 0; i < chunk_size; i += 2) {

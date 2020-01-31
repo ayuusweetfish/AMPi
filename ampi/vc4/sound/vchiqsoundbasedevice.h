@@ -52,7 +52,7 @@ enum TVCHIQSoundState
     VCHIQSoundUnknown
 };
 
-typedef unsigned (*chunk_cb_t) (int16_t *pBuffer, unsigned nChunkSize);
+typedef unsigned (*chunk_cb_t) (int16_t **pBuffer, unsigned nChunkSize);
 
 typedef struct CVCHIQSoundBaseDevice_s
 {

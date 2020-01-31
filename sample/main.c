@@ -5,7 +5,7 @@
 #include "common.h"
 
 // Implemented in synth.c or synth_ogg.c
-unsigned synth(int16_t *buf, unsigned chunk_size);
+unsigned synth(int16_t **buf, unsigned chunk_size);
 
 int main (void)
 {

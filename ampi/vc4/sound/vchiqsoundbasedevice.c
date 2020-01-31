@@ -62,9 +62,9 @@ int CVCHIQSoundBaseDevice_CallMessage (CVCHIQSoundBaseDevice *_this, VC_AUDIO_MS
 int CVCHIQSoundBaseDevice_WriteChunk (CVCHIQSoundBaseDevice *_this)
 {
     if (_this->ChunkCallback == 0) return 0;
-    s16 Buffer[_this->m_nChunkSize];
-    unsigned nWords = (*_this->ChunkCallback) (Buffer, _this->m_nChunkSize);
-    if (nWords == 0)
+    s16 *Buffer = 0;
+    unsigned nWords = (*_this->ChunkCallback) (&Buffer, _this->m_nChunkSize);
+    if (nWords == 0 || Buffer == 0)
     {
         _this->m_State = VCHIQSoundIdle;
 

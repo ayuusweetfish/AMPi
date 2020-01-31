@@ -5,8 +5,11 @@
 #define M_PI 3.1415926535897932384626433832795
 #endif
 
-unsigned synth(int16_t *buf, unsigned chunk_size)
+unsigned synth(int16_t **o_buf, unsigned chunk_size)
 {
+	static int16_t buf[8192];
+	*o_buf = &buf[0];
+
 	static uint8_t phase = 0;
 	static uint32_t count = 0;
 	if (count >= 131072) { count = 0; return 0; }
