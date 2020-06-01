@@ -141,15 +141,49 @@ void *GetCoherentRegion512K ()
 	return (void *) 0x4c00000;
 }
 
+#ifndef AARCH64
+	#define	EnableInterrupts()	__asm volatile ("cpsie i")
+	#define	DisableInterrupts()	__asm volatile ("cpsid i")
+#else
+	#define	EnableInterrupts()	__asm volatile ("msr DAIFClr, #2")
+	#define	DisableInterrupts()	__asm volatile ("msr DAIFSet, #2")
+#endif
+
+static volatile unsigned char irq_enab_save;
+
+static void EnterCritical (void)
+{
+	DMB(); DSB();
+#ifndef AARCH64
+	uint32_t cpsr;
+	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
+#else
+	uint64_t cpsr;
+	asm volatile ("mrs %0, daif" : "=r" (cpsr));
+#endif
+
+	DisableInterrupts();
+	irq_enab_save = (cpsr & 0x80) == 0;
+	DMB(); DSB();
+}
+
+static void LeaveCritical (void)
+{
+	DMB(); DSB();
+	if (irq_enab_save) EnableInterrupts();
+	DMB(); DSB();
+}
+
 static char pool[1048576 * 32];
-static size_t ptr = 0;
+static volatile size_t ptr = 0;
 
 void *ampi_malloc (size_t size)
 {
-	linuxemu_EnterCritical();
-	void *ret = (void *)(pool + ptr);
-	ptr += size;
-	linuxemu_LeaveCritical();
+	EnterCritical();
+	volatile size_t p = ptr;
+	ptr = p + size;
+	LeaveCritical();
+	void *ret = (void *)(pool + p);
 	return ret;
 }
 

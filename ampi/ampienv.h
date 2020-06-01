@@ -25,6 +25,7 @@ extern "C" {
 // For reference, a total of 1392 bytes will be allocated for a
 // single initialization on a Pi Zero. Starting and stopping do
 // not incur memory allocations.
+// These procedures should be reentrant.
 void *ampi_malloc (size_t size);
 void ampi_free (void *ptr);
 
